@@ -1,23 +1,22 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('Inicio'){
-            steps{
-                sh 'echo inicio'
+    stages {
+        stage('Inicio') {
+            steps {
+                bat 'echo Inicio'
             }
         }
-        stage('Testes API com REst Assured'){
-            steps{
-                sh 'mvn clean test'
+        stage('Testes API com Rest Assured') {
+            steps {
+                bat 'mvn clean install'
             }
         }
-}
-        post{
-            always{
-                script {
+    }
+    post {
+        always {
+            script {
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
     }
-
 }
