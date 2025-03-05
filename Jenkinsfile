@@ -2,21 +2,20 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'APP_BASE_URL', description: 'Base URL do aplicativo')
+            string(name: 'APP_BASE_URL', description: 'Base URL da API')
     }
-
     stages {
         stage('Inicio') {
             steps {
-                echo 'Inicio'
+                bat 'echo Inicio'
             }
         }
-
         stage('Testes API com Rest Assured') {
             steps {
-                bat 'mvn clean install'
+                bat 'mvn clean test'
             }
         }
+    }
     post {
         always {
             script {
