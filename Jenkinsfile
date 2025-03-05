@@ -14,7 +14,6 @@ pipeline {
 
         stage('Testes API com Rest Assured') {
             steps {
-                // Passando o parâmetro APP_BASE_URL para o Maven
                 bat "mvn clean test -DAPP_BASE_URL=${params.APP_BASE_URL}"
             }
         }
@@ -23,7 +22,16 @@ pipeline {
     post {
         always {
             script {
-                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                try {
+                    // Limpar o diretório allure-results antes de gerar o novo relatório
+                    bat "del /Q allure-results\\*.*"
+
+
+                    // Gerando o relatório Allure
+                    allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                } catch (Exception e)
+                    echo "Falha ao gerar relatório Allure: ${e.message}"
+                }
             }
         }
     }
