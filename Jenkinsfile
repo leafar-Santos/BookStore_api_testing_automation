@@ -22,16 +22,8 @@ pipeline {
     post {
         always {
             script {
-                try {
-                    // Limpar o diretório allure-results antes de gerar o novo relatório
                     bat "del /Q allure-results\\*.*"
-
-
-                    // Gerando o relatório Allure
                     allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-                } catch (Exception e)
-                    echo "Falha ao gerar relatório Allure: ${e.message}"
-                }
             }
         }
     }
