@@ -22,7 +22,6 @@ pipeline {
     post {
         always {
             script {
-                    bat "del /Q allure-results\\*.*"
                     allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
